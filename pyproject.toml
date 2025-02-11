@@ -3,7 +3,7 @@ name = "mentat-bot"
 version = "0.1.0"
 description = "Discord bot designed to streamline credential management and access tracking during red team engagements."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12, <3.13"
 dependencies = [
     "click>=8.1.8",
     "discord-py>=2.4.0",
