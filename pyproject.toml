@@ -1,0 +1,25 @@
+[project]
+name = "mentat-bot"
+version = "0.1.0"
+description = "Discord bot designed to streamline credential management and access tracking during red team engagements."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "click>=8.1.8",
+    "rich>=13.9.4",
+]
+
+[project.scripts]
+mentat = "mentat.cli:cli"
+
+[tool.uv]
+package = true
+
+[dependency-groups]
+dev = [
+    "mkautodocs>=0.3.4.3",
+    "mkdocs-material>=9.6.3",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.9.6",
+]

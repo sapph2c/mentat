@@ -1,0 +1,7 @@
+*__pycache__
+tests/*.pdf
+dist
+*.coverage
+*.tox
+*.egg-info
+site

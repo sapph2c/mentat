@@ -1,0 +1,88 @@
+name: Docs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+
+jobs:
+  docs:
+    name: Build and publish docs 📖
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+
+      - name: "Set docs version"
+        run: |
+          version="latest"
+          # Use version as display name for now
+          display_name="$version"
+
+          echo "version=$version" >> "$GITHUB_ENV"
+          echo "display_name=$display_name" >> "$GITHUB_ENV"
+
+      - name: "Set branch name"
+        run: |
+          timestamp="$(date +%s)"
+          branch_display_name="$(echo "${display_name}" | tr -c '[:alnum:]._' '-' | tr -s '-')"
+          echo "branch_name=update-docs-$branch_display_name-$timestamp" >> "$GITHUB_ENV"
+          echo "timestamp=$timestamp" >> "$GITHUB_ENV"
+
+      - name: "Install dependencies"
+        run: pip install -r docs/requirements.txt
+
+      - name: "Build docs"
+        run: mkdocs build --strict
+
+      - name: "Clone docs repo"
+        run: git clone https://${{ secrets.SAPPH2C_DOCS_PAT }}@github.com/sapph2c/docs.git sapph2c-docs
+
+      - name: "Copy docs"
+        run: rm -rf sapph2c-docs/mentat && mkdir -p sapph2c-docs/mentat/ && cp -r site/* sapph2c-docs/mentat/
+
+      - name: "Commit docs"
+        working-directory: sapph2c-docs
+        run: |
+          git config user.name "sapph2c-docs-bot"
+          git config user.email "sapph2c-docs-bot@users.noreply.github.com"
+
+          git checkout -b "${branch_name}"
+          git add mentat 
+          git commit -m "Update mentat documentation for $version"
+
+      - name: "Create Pull Request"
+        working-directory: sapph2c-docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.SAPPH2C_DOCS_PAT }}
+        run: |
+          pull_request_title="Update mentat documentation for ${display_name}"
+          
+          # If any PR is already open with the same title, close it.
+          gh pr list --state open --json title --jq '.[] | select(.title == "$pull_request_title") | .number' | \
+            xargs -I {} gh pr close {}
+
+          # Push the branch to GitHub
+          git push origin "${branch_name}"
+
+          # Create the PR
+          gh pr create \
+            --base=main \
+            --head="${branch_name}" \
+            --title="${pull_request_title}" \
+            --body="Automated documentation update for ${display_name}" \
+            --label="documentation"
+
+      - name: "Merge Pull Request"
+        working-directory: sapph2c-docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.SAPPH2C_DOCS_PAT }}
+        run: |
+          sleep 10
+          gh pr merge --squash "${branch_name}"
+

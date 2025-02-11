@@ -1,0 +1,37 @@
+site_name: Mentat
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: astral-light
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: astral-dark
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+repo_url: https://github.com/sapph2c/mentat
+repo_name: mentat
+site_author: sapph2c 
+site_url: https://docs.sapph2c.dev/mentat/
+site_description: Discord bot designed to streamline credential management and access tracking during red team engagements.
+use_directory_urls: false
+plugins:
+  - search
+extra_css:
+  - stylesheets/extra.css
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Usage: usage.md
+  - License: license.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
