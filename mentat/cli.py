@@ -24,7 +24,13 @@ async def cli(config: str):
     Mentat Discord bot CLI.
     """
     # fetch the token from config.yml
-    token = get_token(config)
+    try:
+        token = get_token(config)
+        discord_logger.info("successfuly retrieved bot token")
+    except Exception as e:
+        discord_logger.fatal(f"failed to retrieve bot token with error: {e}")
+        exit(1)
+
     # create the Discord bot
     bot = commands.Bot(command_prefix="/", intents=Intents.all())
     # register the credentials management commands
@@ -36,3 +42,4 @@ async def cli(config: str):
     except Exception as e:
         # log and catch any exceptions
         discord_logger.fatal(f"mentat crashed with exception: {e}")
+        exit(1)

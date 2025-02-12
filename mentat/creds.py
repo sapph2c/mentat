@@ -138,18 +138,21 @@ class CredManagement(commands.Cog):
             for channel in self.bot.get_all_channels():
                 if re.match(r"^[0-9]+_[0-9]+_[0-9]+_[0-9]+$", channel.name):
                     await channel.delete()
+            self.hosts = []
         except Exception as e:
             self.logger.error(e)
 
     @commands.command()
-    async def addcreds(self, ctx, type: str, ip: str, username: str, password: str):
+    async def addcreds(
+        self, ctx, ip: str, pass_type: str, username: str, password: str
+    ):
         """
-        Add creds to a host
+        Add creds to a host, positional arguments are <ip> <pass_type> <username> <password
         """
         try:
             for host in self.hosts:
                 if ip == host.get_ip():
-                    new_creds = Credentials(type, username, password)
+                    new_creds = Credentials(pass_type, username, password)
                     self.logger.info(f"{ip}: adding creds: {new_creds}")
                     host.add_creds(new_creds)
         except Exception as e:
@@ -158,7 +161,7 @@ class CredManagement(commands.Cog):
     @commands.command()
     async def addhosts(self, ctx):
         """
-        Adds hosts to mentat via a newline separated list
+        Adds hosts to mentat via `.yaml` file
         """
         try:
             for attachment in ctx.message.attachments:
