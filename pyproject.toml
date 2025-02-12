@@ -7,6 +7,7 @@ requires-python = ">=3.12, <3.13"
 dependencies = [
     "asyncclick>=8.1.8",
     "discord-py>=2.4.0",
+    "paramiko>=3.5.1",
     "python-json-logger>=3.2.1",
     "rich>=13.9.4",
 ]
