@@ -1,12 +1,13 @@
 [project]
 name = "mentat-bot"
-version = "0.2.1"
+version = "1.0.0"
 description = "Discord bot designed to streamline credential management and access tracking during red team engagements."
 readme = "README.md"
 requires-python = ">=3.12, <3.13"
 dependencies = [
-    "click>=8.1.8",
+    "asyncclick>=8.1.8",
     "discord-py>=2.4.0",
+    "paramiko>=3.5.1",
     "python-json-logger>=3.2.1",
     "rich>=13.9.4",
 ]
