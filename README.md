@@ -15,7 +15,7 @@ Mentat is available as a Python package on PyPI and can be installed using `uv` 
 Install using uv:
 
 ```bash
-uv install tool mentat-bot@latest
+uv tool install mentat-bot@latest
 ```
 
 Install using pipx:
