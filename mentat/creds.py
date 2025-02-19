@@ -121,7 +121,7 @@ class CredManagement(commands.Cog):
         """
         try:
             self.ssh.connect(
-                ip, port=2222, username=cred.username, password=cred.password
+                ip, port=22, username=cred.username, password=cred.password
             )
             return True
         except Exception as e:
