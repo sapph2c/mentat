@@ -1,6 +1,6 @@
 [project]
 name = "mentat-bot"
-version = "1.1.2"
+version = "1.1.3"
 description = "Discord bot designed to streamline credential management and access tracking during red team engagements."
 readme = "README.md"
 requires-python = ">=3.12, <3.13"
