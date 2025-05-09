@@ -77,3 +77,14 @@ Example `hosts.yaml` file:
 192.168.56.2
 192.168.56.3
 ```
+
+## Tech Stack
+
+- **Tox**: Test runner.
+- **Ruff**: Linter, amazingly fast.
+- **UV**: Package and project manager, also incredibly fast.
+- **Python 3.12**: Developement language.
+- **pre-commit**: Framework for pre-commit hooks.
+- **GitHub Actions**: CI/CD.
+- **Material for MkDocs**: Documentation theme and builder.
+
